@@ -1,0 +1,9 @@
+{
+  "name": "ТУ-Варна · Студентски хъб",
+  "short_name": "ТУ Хъб",
+  "start_url": "/#/dashboard",
+  "display": "standalone",
+  "background_color": "#0a0f1d",
+  "theme_color": "#1d4fd8",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

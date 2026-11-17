@@ -1,0 +1,2 @@
+{"token_endpoint":"https://login.microsoftonline.com/31886941-8a86-4f93-8f42-d140eaea36ad/oauth2/v2.0/token","token_endpoint_auth_methods_supported":["client_secret_post","private_key_jwt","client_secret_basic","self_signed_tls_client_auth"],"jwks_uri":"https://login.microsoftonline.com/31886941-8a86-4f93-8f42-d140eaea36ad/discovery/v2.0/keys","response_modes_supported":["query","fragment","form_post"],"subject_types_supported":["pairwise"],"id_token_signing_alg_values_supported":["RS256"],"resp... (1964 bytes total)
+[full output: ~/AppData\Local\rtk\tee\1794439536_curl.log]

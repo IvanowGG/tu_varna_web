@@ -1,0 +1,62 @@
+# TU-Varna Student Hub - settings.
+# Copy this file to config.toml and fill in what you need. config.toml holds secrets:
+# never commit it, never paste it into chat. Without a config.toml the hub runs in
+# local trial mode (demo sign-in on 127.0.0.1 only, document templates instead of AI).
+
+# Where the server listens. "127.0.0.1:8080" = this PC only; "0.0.0.0:8080" = the network
+# (use that behind a reverse proxy with HTTPS, e.g. Caddy or nginx).
+# The Docker image ignores this and listens on 0.0.0.0:8080 (it passes --bind).
+bind = "127.0.0.1:8080"
+
+# The exact address students type in the browser. Sign-in and the cross-site guard use it,
+# so it must match (scheme, host and port). Use https:// for anything public.
+public_url = "http://localhost:8080"
+
+# true only when a reverse proxy you control sits in front and sets X-Forwarded-For.
+trust_proxy = false
+
+[microsoft]
+# Sign-in with the university Microsoft account (Entra ID). Steps, once:
+#  1. https://entra.microsoft.com -> App registrations -> New registration.
+#     Name: TU-Varna Student Hub. Accounts: "this organizational directory only".
+#     Redirect URI: platform "Web", value = public_url + "/auth/callback",
+#     e.g. http://localhost:8080/auth/callback (add the https one when you host it).
+#  2. Copy "Application (client) ID" into client_id below.
+#  3. Certificates & secrets -> New client secret -> copy the VALUE into client_secret.
+#  4. API permissions: Microsoft Graph, delegated User.Read is all the hub needs (it is
+#     there by default). Students approve it once at their first sign-in.
+# If you cannot register apps in the TU-Varna tenant, ask the university IT.
+client_id = ""
+client_secret = ""
+# TU-Varna tenant ID. Leave as it is.
+tenant = "31886941-8a86-4f93-8f42-d140eaea36ad"
+# Only accounts ending in these domains may sign in.
+allowed_domains = ["tu-varna.bg"]
+# Leave EMPTY. Sign-in asks only for name, e-mail and profile (User.Read), which students
+# approve themselves. Each extra permission listed here (e.g. "Calendars.Read") is asked for
+# at every sign-in; if TU-Varna requires IT approval for it, NOBODY can sign in.
+extra_scopes = []
+
+[schedule]
+# The university timetable site. Only hosts on allowed_hosts can be fetched.
+umo_base = "http://umo.tu-varna.bg"
+allowed_hosts = ["tu-varna.bg"]
+cache_minutes = 15
+max_bytes = 4000000
+
+[ai]
+# Document assistant. Without a key it uses built-in templates (free, offline).
+# Key from https://console.anthropic.com -> API keys. Every request costs money;
+# the limits below cap it.
+api_key = ""
+model = "claude-opus-5-5"
+# low | medium | high - higher = better texts, slower and dearer.
+effort = "medium"
+max_output_tokens = 16000
+# Requests per student per hour, and for the whole site per day.
+per_user_per_hour = 20
+per_day_total = 400
+
+[captcha]
+# Proof-of-work strength. 17 = about half a second on a phone. Each +1 doubles the work.
+difficulty_bits = 17
